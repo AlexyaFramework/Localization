@@ -156,6 +156,16 @@ class Translator
     }
 
     /**
+     * Sets default language.
+     *
+     * @param string $language Default language.
+     */
+    public function setDefaultLanguage(string $language)
+    {
+        $this->_defaultLanguage = $language;
+    }
+
+    /**
      * Adds new translations.
      *
      * If the language doesn't exist, it will be created.
@@ -190,13 +200,13 @@ class Translator
 
         // Parse $text to an array now so we can use it's original value later
         foreach(explode(".", $text) as $t) {
+            $translated = ($translated[$t] ?? []);
+
             if(!is_array($translated)) {
                 // $translated is not an array
                 // This means that we've reached last text translation sub-array
                 return $this->_parseContext($translated, $context);
             }
-
-            $translated = ($translated[$t] ?? []);
         }
 
         return $text;
@@ -219,9 +229,14 @@ class Translator
 
         if(is_string($context)) {
             $l = $context;
+        } else if(is_array($context)) {
+            $c = $context;
         }
+
         if(is_string($language)) {
             $l = $language;
+        } else if(is_array($language)) {
+            $c = $language;
         }
 
         return [$t, $c, $l];
