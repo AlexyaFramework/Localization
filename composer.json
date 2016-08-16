@@ -1,7 +1,7 @@
 {
 	"name": "alexya-framework/localization",
 	"type": "framework",
-    "version": "3.0.1",
+    "version": "3.0.2",
 	"description": "Alexya's Localization utilities",
 	"keywords": ["php", "framework", "locale", "localization", "translations", "php7", "alexya"],
 	"license": "GNU",
