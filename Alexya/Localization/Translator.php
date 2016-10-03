@@ -8,6 +8,9 @@ namespace Alexya\Localization;
  * containing the language code and the translations.
  * Optionally you can send a second parameter being the default language where
  * the texts will be translated.
+ * It can also accept a third parameter being the string that will wrap context variables,
+ * it can be a string (the start of the string is the same as the end) or an
+ * array (the first index is the start of the string and the second index is the ending of the string).
  *
  * Example:
  *
@@ -67,7 +70,7 @@ namespace Alexya\Localization;
  *
  *             "Today is {day}" => "Hoy es {day}"
  *         ]
- *     ]);
+ *     ], "en", ["{", "}"]);
  *
  *     // Quick translation
  *     $translator->translate("Today is {day}");
@@ -110,7 +113,7 @@ namespace Alexya\Localization;
  *                 "sunday"    => "sunday"
  *             ],
  *             "phrases" => [
- *                 "today_is" => "Today is {day}"
+ *                 "today_is" => "Today is %day%"
  *             ]
  *         ]
  *     ]);
@@ -144,15 +147,24 @@ class Translator
     private $_defaultLanguage = "";
 
     /**
+     * Context wrapper.
+     *
+     * @var string|array
+     */
+    private $_contextWrapper = "%";
+
+    /**
      * Constructor.
      *
      * @param array  $translations    Translations array.
      * @param string $defaultLanguage Default language where the texts will be translated (default is `en`).
+     * @param array  $contextWrapper  Default wrapper for context variables.
      */
-    public function __construct(array $translations = [], string $defaultLanguage = "en")
+    public function __construct(array $translations = [], string $defaultLanguage = "en", $contextWrapper = "%")
     {
         $this->_translations    = $translations;
         $this->_defaultLanguage = $defaultLanguage;
+        $this->_contextWrapper  = $contextWrapper;
     }
 
     /**
@@ -209,7 +221,7 @@ class Translator
             }
         }
 
-        return $text;
+        return $this->_parseContext($text, $context);
     }
 
     /**
@@ -259,7 +271,13 @@ class Translator
                 !is_array($val) &&
                 (!is_object($val) || method_exists($val, '__toString'))
             ) {
-                $replace['{'.$key.'}'] = $val;
+                if(is_array($this->_contextWrapper)) {
+                    $key = ($this->_contextWrapper[0] ?? ""). $key .($this->_contextWrapper[1] ?? "");
+                } else {
+                    $key = $this->_contextWrapper.$key.$this->_contextWrapper;
+                }
+
+                $replace[$key] = $val;
             }
         }
 
