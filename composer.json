@@ -1,26 +1,26 @@
 {
-	"name": "alexya-framework/localization",
-	"type": "framework",
-    "version": "3.0.3",
-	"description": "Alexya's Localization utilities",
-	"keywords": ["php", "framework", "locale", "localization", "translations", "php7", "alexya"],
-	"license": "GNU",
+    "name": "alexya-framework/localization",
+    "type": "framework",
+    "version": "3.1.0",
+    "description": "Alexya's Localization utilities",
+    "keywords": ["php", "framework", "locale", "localization", "translations", "php7", "alexya"],
+    "license": "GNU",
     "support": {
         "issues": "https://github.com/AlexyaFramework/Localization/issues",
         "source": "https://github.com/AlexyaFramework/Localization"
     },
-	"authors": [
-		{
+    "authors": [
+        {
             "name": "Manulaiko",
             "email": "manulaiko@gmail.com"
         }
-	],
-	"require": {
-		"php": ">=7.0"
+    ],
+    "require": {
+        "php": ">=7.0"
     },
-	"autoload": {
-		"psr-4": {
+    "autoload": {
+        "psr-4": {
             "Alexya\\": "Alexya"
         }
-	}
+    }
 }
