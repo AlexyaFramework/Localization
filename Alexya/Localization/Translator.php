@@ -4,7 +4,8 @@ namespace Alexya\Localization;
 use InvalidArgumentException;
 
 /**
- * Text translator class.
+ * Translator class.
+ * =================
  *
  * The constructor accepts as parameter an associative array
  * containing the language code and the translations.
@@ -170,9 +171,9 @@ class Translator
     /**
      * Constructor.
      *
-     * @param array         $translations    Translations array.
-     * @param Locale        $locale          Default locale where the texts will be translated (default = `Locale::en()`).
-     * @param string|array  $contextWrapper  Default wrapper for context variables.
+     * @param array        $translations    Translations array.
+     * @param Locale       $locale          Default locale where the texts will be translated (default = `Locale::en()`).
+     * @param string|array $contextWrapper  Default wrapper for context variables.
      */
     public function __construct(array $translations = [], Locale $locale = null, $contextWrapper = "%")
     {
@@ -190,7 +191,7 @@ class Translator
     /**
      * Sets available locales.
      */
-    private function _setAvailableLocales()
+    private function _setAvailableLocales() : void
     {
         $defaultLocaleExists = false;
         foreach($this->_translations as $key => $val) {
@@ -219,7 +220,7 @@ class Translator
      *
      * @param Locale $locale Default language.
      */
-    public function setDefaultLocale(Locale $locale)
+    public function setDefaultLocale(Locale $locale) : void
     {
         $this->locale = $locale;
     }
@@ -229,10 +230,10 @@ class Translator
      *
      * If the language doesn't exist, it will be created.
      *
-     * @param string $language     Language code.
-     * @param array  $translations Text translations.
+     * @param string   $language     Language code.
+     * @param iterable $translations Text translations.
      */
-    public function addTranslations(string $language, array $translations)
+    public function addTranslations(string $language, iterable $translations) : void
     {
         $currentTranslations = ($this->_translations[$language] ?? []);
 
@@ -253,7 +254,7 @@ class Translator
     public function translate(string $text, $context = [], $language = null) : string
     {
         // Normalize parameters
-        list($text, $context, $language) = $this->_parseParameters($text, $context, $language);
+        [$text, $context, $language] = $this->_parseParameters($text, $context, $language);
 
         $translated = ($this->_translations[$language] ?? []);
 

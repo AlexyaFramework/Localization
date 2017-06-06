@@ -4,6 +4,7 @@ use InvalidArgumentException;
 
 /**
  * Locale class.
+ * =============
  *
  * Represents a locale option.
  *
@@ -556,13 +557,13 @@ class Locale
      *
      * @throws InvalidArgumentException If `$name` isn't a valid locale name.
      */
-     public static function get(string $name)
+     public static function get(string $name) : Locale
      {
         if(!isset(static::$_locales[$name])) {;
             throw new InvalidArgumentException("Locale `{$name}` does not exist!");
         }
 
-        return new static(... array_values(static::$_locales[$name]));;
+        return new static(... array_values(static::$_locales[$name]));
     }
 
     ///////////////////////////////////////
